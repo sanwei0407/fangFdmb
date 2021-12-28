@@ -10,14 +10,37 @@ const routes = [
     name: 'Home',
     component: Home
   },
+  { // 添加房产首页
+    path:'/fang',
+    name:'fang',
+    component: ()=>import('@/views/fang/Fang.vue')
+  },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path:'/addFang',
+    name:'addFang',
+    component: ()=>import('@/views/fang/addFang.vue')
+  },
+  {
+    path:'/searchfang',
+    name:'searchfang',
+    component: ()=>import('@/views/fang/search.vue')
+  },
+  {
+    path:'/addAddress',
+    name:'addAddress',
+    component: ()=>import('@/views/fang/addAddress.vue')
+  },
+  {
+    path:'/addRoom',
+    name:'addRoom',
+    component: ()=>import('@/views/fang/addRoom.vue')
+  },
+  {
+    path:'/roomList',
+    name:'roomList',
+    component: ()=>import('@/views/fang/roomList.vue')
   }
+
 ]
 
 const router = new VueRouter({

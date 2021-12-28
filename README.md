@@ -1,19 +1,9 @@
-# fdmobile
+## 使用到的第三方组件
 
-## Project setup
-```
-yarn install
-```
+- mand-mobile   npm i mand-mobile
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+## 使用到的第三方类库
+- axios    npm  i  axios 
+- dayjs    npm  i dayjs 
 
-### Compiles and minifies for production
-```
-yarn build
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

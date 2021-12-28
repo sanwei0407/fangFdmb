@@ -1,32 +1,75 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <router-view/>
 </template>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+
+html,body{
+  height: 100%;
+  margin:0;
+}
+.br{
+  border: 1px solid red;
 }
 
-#nav {
-  padding: 30px;
+@mixin br{
+  border: 1px solid red;
+}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+.main{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  @include br;
+}
+.ct{
+  height: 0;
+  flex-grow: 1;
+  overflow-y: auto;
+  @include br;
+}
+.ft{
+  height: 150px;
+  @include br;
+}
+.hd{
+  background-color: #5687e6;
+}
+.hdtop{
+  display: flex;
+  justify-content: space-between;
+  padding:0 30px;
+  color:#fff;
+  line-height: 2;
+  &>div:nth-child(2){
+    font-size: 58px;
+    font-weight: 600;
+  }
+  .md-icon.icon-font{
+    line-height: 2;
+  }
+}
 
-    &.router-link-exact-active {
-      color: #42b983;
+.ft{
+  display: flex;
+  justify-content: space-between;
+  background: #fff;
+
+  &>div.ac{
+    color:#5980ee;
+  }
+
+  &>div{
+    padding-top: 20px;
+    color:#a9a9aa;
+    flex:1;
+    text-align: center;
+    i{
+      font-size: 60px;
     }
   }
 }
+
+
+
 </style>
