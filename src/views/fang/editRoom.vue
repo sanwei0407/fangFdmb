@@ -3,13 +3,13 @@
     <div class="hd">
       <div class="hdtop">
         <div @click="$router.back()"> <md-icon  name="arrow-left"   size="lg"/>  </div>
-        <div> 添加房间 </div>
+        <div> 编辑房间 </div>
         <div> </div>
       </div>
     </div>
     <div class="ct">
       <md-field>
-        <md-cell-item title="房产名" :addon="$route.query.name" arrow />
+        <md-cell-item title="房产名" :addon="buildName" arrow />
 
         <md-input-item align="right" v-model="roomInfo.name"  title="房间名称" placeholder="房间名称" arrow />
         <md-input-item align="right" v-model="roomInfo.floor" title="楼层" placeholder="请填写楼层信息" arrow />
@@ -19,12 +19,12 @@
       <div>
         <div> 房间配置</div>
          <div>
-           <md-check-box name="1" v-model="roomInfo.hasWifi"  label="wifi"  />
-           <md-check-box name="1" v-model="roomInfo.hasTv"  label="电视"  />
-           <md-check-box name="1" v-model="roomInfo.hasRsq" label="热水器"  />
-           <md-check-box name="1"  v-model="roomInfo.hasAc" label="空调"  />
-           <md-check-box name="1" v-model="roomInfo.hasXyj"  label="洗衣机"  />
-           <md-check-box name="1" v-model="roomInfo.hasBx" label="冰箱"  />
+           <md-check-box :name="1" v-model="roomInfo.hasWifi"  label="wifi"  />
+           <md-check-box :name="1" v-model="roomInfo.hasTv"  label="电视"  />
+           <md-check-box :name="1" v-model="roomInfo.hasRsq" label="热水器"  />
+           <md-check-box :name="1"  v-model="roomInfo.hasAc" label="空调"  />
+           <md-check-box :name="1" v-model="roomInfo.hasXyj"  label="洗衣机"  />
+           <md-check-box :name="1" v-model="roomInfo.hasBx" label="冰箱"  />
          </div>
       </div>
 
@@ -35,10 +35,10 @@
 
 <script>
 import { mapState } from 'vuex'
-import { addRoom } from "../../apis/fang";
+import { getRoomInfo ,editRoom} from "../../apis/fang";
 
 export default {
-  name: "addRoom",
+  name: "editRoom",
   data() {
     return {
       roomInfo: {
@@ -51,21 +51,37 @@ export default {
         hasTv: 0,
         hasRsq: 0,
         hasWifi: 0,
-      }
+      },
+      buildName:''
     }
   },
+  created(){
+      this.getInfo();
+  },
   methods: {
+    async getInfo(){
+        let res = await getRoomInfo({roomId:this.$route.query.roomId})
+        console.log(res)
+        const {success,data} = res;
+        const {roomid,..._teminfo} = data;
+        this.roomInfo = _teminfo;
+        this.roomInfo.roomId = roomid;
+
+
+        this.buildName = data.build.name
+
+    },
     async save() {
       if(!this.roomInfo.name)  return this.$toast.info('请填写房间名称')
       if(!this.roomInfo.roomNum)  return this.$toast.info('请填写房间号')
       if(!this.roomInfo.floor)  return this.$toast.info('请填写楼层数')
 
 
-      const res = await addRoom({...this.roomInfo,buildId: parseInt(this.$route.query.buildId) });
+      const res = await editRoom({...this.roomInfo });
 
       const { success,data,info} = res;
       if(!success) return this.$toast.info(info)
-      this.$toast.succeed('添加成功')
+      this.$toast.succeed('修改成功')
       this.$router.back();
 
     }

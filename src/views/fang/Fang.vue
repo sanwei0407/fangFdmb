@@ -8,13 +8,21 @@
     </div>
   </div>
   <div class="ct">
+    <div class="add" v-if="list.length" @click="$router.push({name:'addFang'})">
+     <i class="iconfont icon-jiahao"></i>
+       添加房产 
+       </div>
     <ul>
-      <li v-for="item of list" @click="$router.push({ name:'roomList',query: { buildId: item.buildId,name:item.name } })">
+      <li v-for="item of list" 
+          @click="$router.push({ name:'roomList',query: { buildId: item.buildId,name:item.name } })"
+          :key="item.buildId"
+          class="itembox"
+        >
         <div>{{ item.name}}</div>
         <div> {{item.address}} </div>
       </li>
     </ul>
-    <div class="addbt" @click="$router.push({name:'addFang'})">添加房产</div>
+    <div class="addbt" @click="$router.push({name:'addFang'})" v-if="!list.length">添加房产</div>
   </div>
   <div class="ft">
     <div class="ac">
@@ -64,6 +72,7 @@ name: "Fang",
 <style lang="scss" scoped>
 .ct{
   position: relative;
+ background-color: #f0f0f3;
 }
 .addbt{
   height: 136px;
@@ -77,5 +86,18 @@ name: "Fang",
   align-items: center;
   justify-content: center;
   transform: translateX(-50%);
+}
+.itembox{
+  padding:40px;
+  border-bottom:1px solid #9a9a9a;
+  background: #fff;
+}
+ul{
+  margin-top: 30px;
+}
+.add{
+  line-height: 150px;
+  text-align: center;
+  background: #fff;
 }
 </style>

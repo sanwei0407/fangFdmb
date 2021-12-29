@@ -2,7 +2,7 @@
   <div class="main">
     <div class="hd">
       <div class="hdtop">
-        <div> <md-icon  name="search"   size="lg"/>  </div>
+        <div @click="$router.back()"> <md-icon  name="arrow-left"   size="lg"/>  </div>
         <div> 选择房产名 </div>
         <div @click="$router.back()">  取消 </div>
       </div>
@@ -55,8 +55,6 @@ export default {
   },
   mounted(){
     if(this.$store.state.newFang.name)  this.keyword = this.$store.state.newFang.name;
-
-
   },
   watch:{
     keyword(){
@@ -79,11 +77,12 @@ export default {
       this.curType = val[0].label
     },
     async doSearch(){
+      console.log('keyword',this.keyword)
       const res = await getBdSearch({keyword:this.keyword})
       console.log(res)
       // this.placeList = res.data.result.map({address,uid,name} => ({ address,uid,name} ));
       this.placeList = res.data.result.map(item=> {
-          const {address,uid,name,location}  = item;
+          const { address,uid,name,location}  = item;
           return {
             address,
             uid,

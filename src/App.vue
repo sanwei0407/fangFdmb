@@ -20,17 +20,18 @@ html,body{
   display: flex;
   flex-direction: column;
   height: 100%;
-  @include br;
+  // @include br;
 }
 .ct{
   height: 0;
   flex-grow: 1;
   overflow-y: auto;
-  @include br;
+  // @include br;
 }
 .ft{
   height: 150px;
-  @include br;
+  border-top:1px solid #9a9a9a
+  // @include br;
 }
 .hd{
   background-color: #5687e6;
@@ -41,6 +42,10 @@ html,body{
   padding:0 30px;
   color:#fff;
   line-height: 2;
+  &>div:nth-child(3){
+    display: flex;
+    align-items: center;
+  }
   &>div:nth-child(2){
     font-size: 58px;
     font-weight: 600;

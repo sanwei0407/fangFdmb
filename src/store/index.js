@@ -5,10 +5,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    newFang:{
-
-    }
-    ,newAddress:''
+    newFang:{},
+    newAddress:'',
+    editFang:{},
   },
   mutations: {
     setNewFangInfo(state,data){
@@ -16,6 +15,10 @@ export default new Vuex.Store({
     },
     setNewAddress(state,data){
       state.newAddress = data;
+    },
+    resetFangInfo(state){
+      state.newFang = null
+      state.newAddress = ''
     }
   },
   actions: {

@@ -2,7 +2,7 @@
   <div class="main">
     <div class="hd">
       <div class="hdtop">
-        <div> <md-icon  name="search"   size="lg"/>  </div>
+        <div @click="$router.back()"> <md-icon  name="arrow-left"   size="lg"/>  </div>
         <div> 详细地址 </div>
         <div @click="$router.back()">  取消 </div>
       </div>
@@ -60,7 +60,7 @@ export default {
         this.$router.back();
     },
     async getPlace(){
-      const res = await getBdSearch({keyword:this.keyword})
+      const res = await getBdSearch({keyword:this.address})
       if(res.data.result[0]){
           const loc = res.data.result[0].location;
           this.map.centerAndZoom(new BMapGL.Point(loc.lng,loc.lat), 16); // 设置地图中心点及缩放级别

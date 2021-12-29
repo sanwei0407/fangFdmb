@@ -3,8 +3,8 @@
     <div class="hd">
       <div class="hdtop">
         <div @click="$router.back()"> <md-icon  name="arrow-left"   size="lg"/>  </div>
-        <div> 添加房产 </div>
-        <div @click="saveFang"> 下一步 </div>
+        <div> 修改房产 </div>
+        <div @click="saveFang"> 保存 </div>
       </div>
     </div>
     <div class="ct">
@@ -57,7 +57,7 @@
 
 <script>
 import {mapState} from 'vuex'
-import { addBuild,getAllBuild} from "../../apis/fang";
+import { getBuildInfo,updateBuild} from "../../apis/fang";
 
 export default {
   name: "addFang",
@@ -86,14 +86,35 @@ export default {
       console.log('newAddress',this.newAddress)
     }
   },
-  created(){
-    this.getAll()
+  mounted(){
+        this.getInfo()
   },
   methods: {
-    async getAll(){
-      let res = await  getAllBuild({})
+    async getInfo(){
+      let res = await  getBuildInfo({buildId:this.$route.query.id})
+      console.log('res',res)
+      const { data,success} = res;
+      if(success){
+        const { name,lng,lat,address,dianFee,waterFee} = data;
+          this.dianFee = dianFee
+          this.waterFee = waterFee
+       
+          if(!this.newFang){
+             this.$store.commit('setNewFangInfo',{
+                name,
+                address,
+                location:{
+                  lng,
+                  lat
+                }
+             })
+             this.$store.commit('setNewAddress',address)
+          }
+         
 
-      this.list = res.data.rows
+      }
+      
+      
 
     },
      slttype(val) {
@@ -103,7 +124,7 @@ export default {
 
        console.log(this.newFang)
        console.log(this.newAddress)
-      if(!this.newFang || !this.newAddress) return this.$toast.info('信息不完整请仔细检查')
+       if(!this.newFang || !this.newAddress) return this.$toast.info('信息不完整请仔细检查')
 
 
       const { name ,location } = this.newFang;
@@ -115,17 +136,18 @@ export default {
         lng,
         streetNum:this.newAddress,
         waterFee:this.waterFee,
-        dianFee:this.dianFee
+        dianFee:this.dianFee,
+        buildId:this.$route.query.id
       };
 
-      let res = await  addBuild(postData)
+      let res = await  updateBuild(postData)
       const { success,data} = res;
-      if(success){
-           this.$store.commit('resetFangInfo')
-           this.$toast.succeed('添加成功')    
-           return this.$router.back()  
-      } 
-      this.$toast.failed('添加失败')
+      if(success) {
+         this.$store.commit('resetFangInfo')
+         this.$toast.succeed('修改成功')
+         return this.$router.back()
+      }
+      this.$toast.failed('修改失败')
 
 
 
